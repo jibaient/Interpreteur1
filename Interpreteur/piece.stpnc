@@ -1,0 +1,360 @@
+ISO-10303-21;
+HEADER;
+FILE_DESCRIPTION(/* description */ ('piece exemple pour tournage : piece02'),/* implementation_level */ ' ');
+FILE_NAME(/* name */ 'piece02',/* time_stamp */ '2021-07-01T11:32:00-05:00',/* author */ ('Julien Bechtold'),/* organization */ ('Polytechnique Montreal'),/* preprocessor_version */ '',/* originating_system */ '',/* authorisation */ '');
+ENDSEC;
+
+DATA;
+
+/*Project*/
+#1=PROJECT('EXEMPLE TOURNAGE 02',/*Mainworkplan*/#2 ,/*SET of workpiece ()*/(#100) ,/*its_owner $*/#3,/*its_release $*/$,/*its_statut $*/$);
+#2=WORKPLAN('MAINWORKPLAN',/*liste elements d'executable ()*/(#300,#301) ,/*Channel $*/$,/*Setup $*/#200 ,/*Effect $*/ $);
+#3=PERSON_AND_ADRESS('NOM DE LA PERSONNE', /*attention ,pas conforme, juste pour test, normalement pas un string mais une autre entite STEP*/ $);
+
+/*Workpiece*/
+#100=WORKPIECE('Workpiece01',/*its_material*/#101,/*global_tolerance $*/ 0.010,/*its_rawpiece $*/#103,/*its_geometry $*/#1065,/*its_bounding_geometry $*/$,/*clamping_positions ()*/());
+#101=MATERIAL(/*standard_identifier*/'DIN EN 10027-1',/*material_identifier*/'E 295',/*material_property ()*/(#102));
+#102=NUMERIC_PARAMETER('ELASTIC MODULUS',2.E11,'pa');
+
+#103=WORKPIECE('Rawpiece01',/*its_material*/#101,/*global_tolerance $*/ 0.010,/*its_rawpiece $*/$,/*its_geometry $*/#2065,/*its_bounding_geometry $*/$,/*clamping_positions ()*/());
+
+/*Setup*/
+#200=SETUP(/*its_id*/'SETUP POUR EXEMPLE DE TOURNAGE 02',/*its_origin $*/$,/*its_secplane*/#700,/*its_workpiece_setup ()*/(#201));
+#201=WORKPIECE_SETUP(/*its_workpiece*/#100,/*its_origin*/#710 ,/*its_offset $*/$,/*its_restricted_area $*/$,/*its_instructions ()*/());
+
+/*Workinstep*/
+#300=MACHINING_WORKINGSTEP('Dressage ebauche 01',/*its_secplane*/#700 ,/*its_feature*/#400,/*its_operation*/#500,/*its_effect $*/$);
+#301=MACHINING_WORKINGSTEP('Dressage finition 01',/*its_secplane*/#700 ,/*its_feature*/#400,/*its_operation*/#501,/*its_effect $*/$);
+
+/*Feature*/
+#400=REVOLVED_FLAT(/*its_id*/'FACE',/*its_workpiece*/#100,/*its_operations ()*/(#500,#501),/*feature_placement*/#730 ,/*material_side $*/#732 ,/*radius*/ 0.000,/*flat_edge_shape*/#733);
+
+/*Operation*/
+#500=FACING_ROUGH(/*its_tool_direction $*/ $,/*its_toolpath $*/ $,/*its_id*/ 'Operation dressage ebauche 01',/*retract_plane $*/$,/*start_point $*/$,/*its_tool*/#600 ,/*its_technology*/#801 ,/*its_machine_functions*/#800 ,/*approach $*/#910 ,/*retract $*/#911 ,/*its_machining_strategy $*/#900 ,/*allowance $*/ 0.500);
+#501=FACING_FINISH(/*its_tool_direction $*/ $,/*its_toolpath $*/ $,/*its_id*/ 'Operation dressage finition 01',/*retract_plane $*/$,/*start_point $*/$,/*its_tool*/#610,/*its_technology*/#803 ,/*its_machine_functions*/#800 ,/*approach $*/#910 ,/*retract $*/#911 ,/*its_machining_strategy $*/#901 ,/*allowance $*/ $);
+
+/*Tool*/
+#600=TURNING_MACHINE_TOOL(/*its_id*/'outil ebauche',/*its_tool_body*/#601,/*its_cutting_edge ()*/(#602),/*overall_assembly_length $*/ $,/*overall_assembly_width $*/ $,/*minimum_cutting_diameter $*/$);
+#601=GENERAL_TURNING_TOOL(#603,/*hand_of_tool $*/.LEFT.,/*maximum_cutting_depth $*/$,/*tool_allowance_length $*/$,/*tool_body_height $*/$,/*tool_body_width $*/$,/*rotational_direction $*/$);
+#602=CUTTING_COMPONENT(/*tool_offset_length*/50.,/*its_material $*/ #604,/*technological_data $*/$,/*expected_tool_life $*/ $,/*its_technology $*/$);
+#603=TURNING_TOOL_DIMENSION(/*cutting_edge_length $*/$,/*end_cutting_edge_angle $*/$,/*side_cutting_edge_angle $*/$,/*back_rake_angle $*/ $,/*side_relief_angle $*/$,/*side_relief_angle $*/10.000,/*side_clearance_angle $*/$,/*end_relief_angle $*/20.000,/*end_clearance_angle $*/$,/*nose_radius $*/0.300,/*circle_diameter $*/$);
+#604=MATERIAL(/*standard_identifier*/'T15K6',/*material_identifier*/'CEMENT CARBIDE',/*material_property ()*/(#605));
+#605=NUMERIC_PARAMETER(/*parameter_name*/'ELASTIC MODULUS',/*its_parameter_value*/3.E11,/*its_parameter_unit*/'pa');
+
+#610=TURNING_MACHINE_TOOL(/*its_id*/'outil finition',/*its_tool_body*/#611,/*its_cutting_edge ()*/(#612),/*overall_assembly_length $*/ $,/*overall_assembly_width $*/ $,/*minimum_cutting_diameter $*/$);
+#611=GENERAL_TURNING_TOOL(/*turning_tool_dimension*/#613,/*hand_of_tool $*/.LEFT.,/*maximum_cutting_depth $*/$,/*tool_allowance_length*/$,/*tool_body_height $*/$,/*tool_body_width $*/$,/*rotational_direction $*/$);
+#612=CUTTING_COMPONENT(/*tool_offset_length*/50.,/*its_material $*/ #614,/*technological_data $*/$,/*expected_tool_life $*/ $,/*its_technology $*/$);
+#613=TURNING_TOOL_DIMENSION(/*cutting_edge_length $*/$,/*end_cutting_edge_angle $*/$,/*side_cutting_edge_angle $*/$,/*back_rake_angle $*/ $,/*side_relief_angle $*/$,/*side_relief_angle $*/35.000,/*side_clearance_angle $*/$,/*end_relief_angle $*/25.000,/*end_clearance_angle $*/$,/*nose_radius $*/0.300,/*circle_diameter $*/$);
+#614=MATERIAL(/*standard_identifier*/'T15K6',/*material_identifier*/'CEMENT CARBIDE',/*material_property ()*/(#615));
+#615=NUMERIC_PARAMETER(/*parameter_name*/'ELASTIC MODULUS',/*its_parameter_value*/3.E11,/*its_parameter_unit*/'pa');
+
+/*Placements / longueurs / Plans*/
+#700=PLANE(/*its_id*/'secplane',/*axis2_placement_3d*/#701);
+#701=AXIS2_PLACEMENT_3D(/*its_id*/'Axis2_Placement',/*location : cartesian_point*/#702,/*axis $*/$,/*ref_direction $*/$);
+#702=CARTESIAN_POINT(/*its_id*/'SECPLANE: LOCATION',(44.000,0.000,100.000));
+
+#710=AXIS2_PLACEMENT_3D(/*its_id*/'WORKPIECE',/*location : cartesian_point*/#711,/*axis $*/#712,/*ref_direction $*/#713);
+#711=CARTESIAN_POINT(/*its_id*/'WORKPIECE: LOCATION',(0.000,0.000,0.000));
+#712=DIRECTION(/*its_id*/'WORKPIECE: AXIS',/*direction_ratios*/(0.000,0.000,1.000));
+#713=DIRECTION(/*its_id*/'WORKPIECE: REF_DIRECTION',/*direction_ratios*/(1.000,0.000,0.000));
+
+#720=DIRECTION(/*its_id*/'FACING DIRECTION',/*direction_ratios*/(-1.000,0.000,0.000));
+
+#730=AXIS2_PLACEMENT_3D(/*its_id*/'PLACEMENT END FACE',/*location : cartesian_point*/#731,/*axis $*/$,/*ref_direction $*/$);
+#731=CARTESIAN_POINT(/*its_id*/'END FACE: LOCATION',/*direction_ratios*/(0.000,0.000,38.000));
+#732=DIRECTION(/*its_id*/'END FACE: FRONT',/*direction_ratios*/(0.000,0.000,-1.000));
+
+#733=LINEAR_PROFILE(/*placement $*/$,/*profile_length: numeric_parameter*/#734);
+#734=NUMERIC_PARAMETER(/*parameter_name*/'LINEAR PROFILE LENGTH',/*its_parameter_value*/10.000,/*its_parameter_unit*/'mm');
+
+/*Fonction / Technologie*/
+#800=TURNING_MACHINE_FUNCTIONS(/*coolant*/.T.,/* coolant_type $*/$,/*coolant_pressure $*/$,/*axis_clamping ()*/(),/*chip_removal ()*/.F.,/*oriented_spindle_stop $*/$,/*its_process_model  $*/$,/*other_functions ()*/(),/*tail_stock $*/$,/*steady_rest $*/$,/*follow_rest $*/$);
+
+#801=TURNING_TECHNOLOGY(/*feedrate $*/$,/*feedrate_reference*/.TCP.,/*spindle_speed*/#802,/*feed_per_revolution*/0.300,/*sync_spindle_and_z_feed*/.F.,/*inhibit_feedrate_override*/.F.,/*inhibit_spindle_override*/.F.,/*its_adaptive_control $*/$);
+#802=CONST_SPINDLE_SPEED(/*rot_speed*/10.000);
+
+#803=TURNING_TECHNOLOGY(/*feedrate $*/$,/*feedrate_reference*/.TCP.,/*spindle_speed*/#804,/*feed_per_revolution*/0.200,/*sync_spindle_and_z_feed*/.F.,/*inhibit_feedrate_override*/.F.,/*inhibit_spindle_override*/.F.,/*its_adaptive_control $*/$);
+#804=CONST_CUTTING_SPEED(/*speed */2.500,/*max_speed $*/10.000);
+
+/*Strategies*/
+#900=UNIDIRECTIONAL_TURNING(/*overcut_length  $*/ $,/*allow_multiple_passes*/ $,/*cutting_depth ()*/(2.000),/*variable_feedrate $*/ $,/*feed_direction $*/#720,/*back_path_direction*/ #720,/*lift_direction $*/$,/*stepover_direction $*/$,/*lift_height $*/1.000,/*lift_feed $*/$,/*stepover_feed $*/$);
+#901=UNIDIRECTIONAL_TURNING(/*overcut_length  $*/ $,/*allow_multiple_passes*/ $,/*cutting_depth ()*/(0.500),/*variable_feedrate $*/ $,/*feed_direction $*/#720,/*back_path_direction*/ #720,/*lift_direction $*/$,/*stepover_direction $*/$,/*lift_height $*/2.000,/*lift_feed $*/$,/*stepover_feed $*/$);
+
+#910=AP_RETRACT_TANGENT(/*tool_orientation $*/$,/*radius*/60.000);
+#911=AP_RETRACT_ANGLE(/*tool_orientation $*/$,/*angle*/45.000,/*travel_length*/4.000);
+
+/*Geometrie*/
+
+
+/*Workpiece01*/
+#1000=PRODUCT('Part_Workpiece01','','',(#1113)) ;
+#1001=APPLICATION_CONTEXT('configuration controlled 3D design of mechanical parts and assemblies') ;
+#1002=PRODUCT_DEFINITION('',' ',#1120,#1095) ;
+#1003=SECURITY_CLASSIFICATION(' ',' ',#1004) ;
+#1004=SECURITY_CLASSIFICATION_LEVEL('unclassified') ;
+#1005=CARTESIAN_POINT(' ',(0.,0.,0.)) ;
+#1006=CARTESIAN_POINT('Axis2P3D Location',(0.,19.,0.)) ;
+#1007=CARTESIAN_POINT('Line Origine',(-10.,19.,0.)) ;
+#1008=CARTESIAN_POINT('Vertex',(-10.,0.,0.)) ;
+#1009=CARTESIAN_POINT('Vertex',(-10.,38.,0.)) ;
+#1010=CARTESIAN_POINT('Axis2P3D Location',(0.,0.,0.)) ;
+#1011=CARTESIAN_POINT('Vertex',(10.,0.,1.22464679915E-015)) ;
+#1012=CARTESIAN_POINT('Line Origine',(10.,19.,1.22464679915E-015)) ;
+#1013=CARTESIAN_POINT('Vertex',(10.,38.,1.22464679915E-015)) ;
+#1014=CARTESIAN_POINT('Axis2P3D Location',(0.,38.,0.)) ;
+#1015=CARTESIAN_POINT('Axis2P3D Location',(0.,0.,0.)) ;
+#1016=CARTESIAN_POINT('Axis2P3D Location',(0.,38.,0.)) ;
+#1017=CARTESIAN_POINT('Axis2P3D Location',(0.,0.,0.)) ;
+#1018=CARTESIAN_POINT('Axis2P3D Location',(0.,38.,0.)) ;
+#1019=DIRECTION('Axis2P3D Direction',(0.,1.,0.)) ;
+#1020=DIRECTION('Axis2P3D XDirection',(-1.,0.,0.)) ;
+#1021=DIRECTION('Vector Direction',(0.,1.,0.)) ;
+#1022=DIRECTION('Axis2P3D Direction',(0.,1.,0.)) ;
+#1023=DIRECTION('Vector Direction',(0.,1.,0.)) ;
+#1024=DIRECTION('Axis2P3D Direction',(0.,1.,0.)) ;
+#1025=DIRECTION('Axis2P3D Direction',(0.,1.,0.)) ;
+#1026=DIRECTION('Axis2P3D Direction',(0.,1.,0.)) ;
+#1027=DIRECTION('Axis2P3D Direction',(0.,1.,0.)) ;
+#1028=DIRECTION('Axis2P3D XDirection',(-1.,0.,0.)) ;
+#1029=DIRECTION('Axis2P3D Direction',(0.,1.,0.)) ;
+#1030=DIRECTION('Axis2P3D XDirection',(-1.,0.,0.)) ;
+#1031=AXIS2_PLACEMENT_3D(' ',#1005,$,$) ;
+#1032=AXIS2_PLACEMENT_3D('Cylinder Axis2P3D',#1006,#1019,#1020) ;
+#1033=AXIS2_PLACEMENT_3D('Circle Axis2P3D',#1010,#1022,$) ;
+#1034=AXIS2_PLACEMENT_3D('Circle Axis2P3D',#1014,#1024,$) ;
+#1035=AXIS2_PLACEMENT_3D('Circle Axis2P3D',#1015,#1025,$) ;
+#1036=AXIS2_PLACEMENT_3D('Circle Axis2P3D',#1016,#1026,$) ;
+#1037=AXIS2_PLACEMENT_3D('Plane Axis2P3D',#1017,#1027,#1028) ;
+#1038=AXIS2_PLACEMENT_3D('Plane Axis2P3D',#1018,#1029,#1030) ;
+#1039=PRODUCT_DEFINITION_SHAPE(' ',' ',#1002) ;
+#1040=APPROVAL_PERSON_ORGANIZATION(#1041,#1044,#1046) ;
+#1041=PERSON_AND_ORGANIZATION(#1042,#1043) ;
+#1042=PERSON(' ',' ',' ',$,$,$) ;
+#1043=ORGANIZATION(' ',' ',' ') ;
+#1044=APPROVAL(#1045,' ') ;
+#1045=APPROVAL_STATUS('not_yet_approved') ;
+#1046=APPROVAL_ROLE('APPROVER') ;
+#1047=DATE_AND_TIME(#1074,#1048) ;
+#1048=LOCAL_TIME(10,14,2.,#1049) ;
+#1049=COORDINATED_UNIVERSAL_TIME_OFFSET(0,0,.AHEAD.) ;
+#1050=ORIENTED_EDGE('',*,*,#1096,.F.) ;
+#1051=ORIENTED_EDGE('',*,*,#1097,.T.) ;
+#1052=ORIENTED_EDGE('',*,*,#1098,.T.) ;
+#1053=ORIENTED_EDGE('',*,*,#1099,.F.) ;
+#1054=ORIENTED_EDGE('',*,*,#1098,.F.) ;
+#1055=ORIENTED_EDGE('',*,*,#1100,.T.) ;
+#1056=ORIENTED_EDGE('',*,*,#1096,.T.) ;
+#1057=ORIENTED_EDGE('',*,*,#1101,.F.) ;
+#1058=ORIENTED_EDGE('',*,*,#1100,.F.) ;
+#1059=ORIENTED_EDGE('',*,*,#1097,.F.) ;
+#1060=ORIENTED_EDGE('',*,*,#1099,.T.) ;
+#1061=ORIENTED_EDGE('',*,*,#1101,.T.) ;
+#1062=CLOSED_SHELL('Closed Shell',(#1067,#1068,#1069,#1070)) ;
+#1063=VECTOR('Line Direction',#1021,1.) ;
+#1064=VECTOR('Line Direction',#1023,1.) ;
+#1065=ADVANCED_BREP_SHAPE_REPRESENTATION('NONE',(#1073),#1130) ;
+#1066=SHAPE_REPRESENTATION(' ',(#1031),#1130) ;
+#1067=ADVANCED_FACE('Corps principal',(#1106),#1094,.T.) ;
+#1068=ADVANCED_FACE('Corps principal',(#1107),#1094,.T.) ;
+#1069=ADVANCED_FACE('Corps principal',(#1108),#1115,.F.) ;
+#1070=ADVANCED_FACE('Corps principal',(#1109),#1116,.T.) ;
+#1071=APPLICATION_PROTOCOL_DEFINITION('international standard','config_control_design',1994,#1001) ;
+#1072=APPROVAL_DATE_TIME(#1047,#1044) ;
+#1073=MANIFOLD_SOLID_BREP('Corps principal',#1062) ;
+#1074=CALENDAR_DATE(2021,1,7) ;
+#1075=CC_DESIGN_APPROVAL(#1044,(#1003,#1120,#1002)) ;
+#1076=CC_DESIGN_DATE_AND_TIME_ASSIGNMENT(#1047,#1078,(#1003)) ;
+#1077=CC_DESIGN_DATE_AND_TIME_ASSIGNMENT(#1047,#1079,(#1002)) ;
+#1078=DATE_TIME_ROLE('classification_date') ;
+#1079=DATE_TIME_ROLE('creation_date') ;
+#1080=CC_DESIGN_PERSON_AND_ORGANIZATION_ASSIGNMENT(#1041,#1084,(#1003)) ;
+#1081=CC_DESIGN_PERSON_AND_ORGANIZATION_ASSIGNMENT(#1041,#1085,(#1120)) ;
+#1082=CC_DESIGN_PERSON_AND_ORGANIZATION_ASSIGNMENT(#1041,#1086,(#1120,#1002)) ;
+#1083=CC_DESIGN_PERSON_AND_ORGANIZATION_ASSIGNMENT(#1041,#1087,(#1000)) ;
+#1084=PERSON_AND_ORGANIZATION_ROLE('classification_officer') ;
+#1085=PERSON_AND_ORGANIZATION_ROLE('design_supplier') ;
+#1086=PERSON_AND_ORGANIZATION_ROLE('creator') ;
+#1087=PERSON_AND_ORGANIZATION_ROLE('design_owner') ;
+#1088=CC_DESIGN_SECURITY_CLASSIFICATION(#1003,(#1120)) ;
+#1089=CIRCLE('generated circle',#1033,10.) ;
+#1090=CIRCLE('generated circle',#1034,10.) ;
+#1091=CIRCLE('generated circle',#1035,10.) ;
+#1092=CIRCLE('generated circle',#1036,10.) ;
+#1093=SHAPE_REPRESENTATION_RELATIONSHIP(' ',' ',#1066,#1065) ;
+#1094=CYLINDRICAL_SURFACE('generated cylinder',#1032,10.) ;
+#1095=DESIGN_CONTEXT(' ',#1001,'design') ;
+#1096=EDGE_CURVE('',#1123,#1124,#1111,.T.) ;
+#1097=EDGE_CURVE('',#1123,#1125,#1089,.T.) ;
+#1098=EDGE_CURVE('',#1125,#1126,#1112,.T.) ;
+#1099=EDGE_CURVE('',#1124,#1126,#1090,.T.) ;
+#1100=EDGE_CURVE('',#1125,#1123,#1091,.T.) ;
+#1101=EDGE_CURVE('',#1126,#1124,#1092,.T.) ;
+#1102=EDGE_LOOP('',(#1050,#1051,#1052,#1053)) ;
+#1103=EDGE_LOOP('',(#1054,#1055,#1056,#1057)) ;
+#1104=EDGE_LOOP('',(#1058,#1059)) ;
+#1105=EDGE_LOOP('',(#1060,#1061)) ;
+#1106=FACE_OUTER_BOUND('',#1102,.T.) ;
+#1107=FACE_OUTER_BOUND('',#1103,.T.) ;
+#1108=FACE_OUTER_BOUND('',#1104,.T.) ;
+#1109=FACE_OUTER_BOUND('',#1105,.T.) ;
+#1110=UNCERTAINTY_MEASURE_WITH_UNIT(LENGTH_MEASURE(0.005),#1127,'distance_accuracy_value','CONFUSED CURVE UNCERTAINTY') ;
+#1111=LINE('Line',#1007,#1063) ;
+#1112=LINE('Line',#1012,#1064) ;
+#1113=MECHANICAL_CONTEXT(' ',#1001,'mechanical') ;
+#1114=PERSONAL_ADDRESS(' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',(#1042),' ') ;
+#1115=PLANE('',#1037) ;
+#1116=PLANE('',#1038) ;
+#1117=PLANE_ANGLE_MEASURE_WITH_UNIT(PLANE_ANGLE_MEASURE(0.0174532925199),#1128) ;
+#1118=PRODUCT_CATEGORY('part',$) ;
+#1119=PRODUCT_CATEGORY_RELATIONSHIP(' ',' ',#1118,#1121) ;
+#1120=PRODUCT_DEFINITION_FORMATION_WITH_SPECIFIED_SOURCE('',' ',#1000,.NOT_KNOWN.) ;
+#1121=PRODUCT_RELATED_PRODUCT_CATEGORY('detail',$,(#1000)) ;
+#1122=SHAPE_DEFINITION_REPRESENTATION(#1039,#1066) ;
+#1123=VERTEX_POINT('',#1008) ;
+#1124=VERTEX_POINT('',#1009) ;
+#1125=VERTEX_POINT('',#1011) ;
+#1126=VERTEX_POINT('',#1013) ;
+#1127=(LENGTH_UNIT()NAMED_UNIT(*)SI_UNIT(.MILLI.,.METRE.)) ;
+#1128=(NAMED_UNIT(*)PLANE_ANGLE_UNIT()SI_UNIT($,.RADIAN.)) ;
+#1129=(NAMED_UNIT(*)SI_UNIT($,.STERADIAN.)SOLID_ANGLE_UNIT()) ;
+#1130=(GEOMETRIC_REPRESENTATION_CONTEXT(3)GLOBAL_UNCERTAINTY_ASSIGNED_CONTEXT((#1110))GLOBAL_UNIT_ASSIGNED_CONTEXT((#1127,#1128,#1129))REPRESENTATION_CONTEXT(' ',' ')) ;
+
+/*Rawpiece01*/
+#2000=PRODUCT('Part_Rawpiece01','','',(#2113)) ;
+#2001=APPLICATION_CONTEXT('configuration controlled 3D design of mechanical parts and assemblies') ;
+#2002=PRODUCT_DEFINITION('',' ',#2120,#2095) ;
+#2003=SECURITY_CLASSIFICATION(' ',' ',#2004) ;
+#2004=SECURITY_CLASSIFICATION_LEVEL('unclassified') ;
+#2005=CARTESIAN_POINT(' ',(0.,0.,0.)) ;
+#2006=CARTESIAN_POINT('Axis2P3D Location',(0.,20.,0.)) ;
+#2007=CARTESIAN_POINT('Line Origine',(-10.,20.,0.)) ;
+#2008=CARTESIAN_POINT('Vertex',(-10.,0.,0.)) ;
+#2009=CARTESIAN_POINT('Vertex',(-10.,40.,0.)) ;
+#2010=CARTESIAN_POINT('Axis2P3D Location',(0.,0.,0.)) ;
+#2011=CARTESIAN_POINT('Vertex',(10.,0.,1.22464679915E-015)) ;
+#2012=CARTESIAN_POINT('Line Origine',(10.,20.,1.22464679915E-015)) ;
+#2013=CARTESIAN_POINT('Vertex',(10.,40.,1.22464679915E-015)) ;
+#2014=CARTESIAN_POINT('Axis2P3D Location',(0.,40.,0.)) ;
+#2015=CARTESIAN_POINT('Axis2P3D Location',(0.,0.,0.)) ;
+#2016=CARTESIAN_POINT('Axis2P3D Location',(0.,40.,0.)) ;
+#2017=CARTESIAN_POINT('Axis2P3D Location',(0.,0.,0.)) ;
+#2018=CARTESIAN_POINT('Axis2P3D Location',(0.,40.,0.)) ;
+#2019=DIRECTION('Axis2P3D Direction',(0.,1.,0.)) ;
+#2020=DIRECTION('Axis2P3D XDirection',(-1.,0.,0.)) ;
+#2021=DIRECTION('Vector Direction',(0.,1.,0.)) ;
+#2022=DIRECTION('Axis2P3D Direction',(0.,1.,0.)) ;
+#2023=DIRECTION('Vector Direction',(0.,1.,0.)) ;
+#2024=DIRECTION('Axis2P3D Direction',(0.,1.,0.)) ;
+#2025=DIRECTION('Axis2P3D Direction',(0.,1.,0.)) ;
+#2026=DIRECTION('Axis2P3D Direction',(0.,1.,0.)) ;
+#2027=DIRECTION('Axis2P3D Direction',(0.,1.,0.)) ;
+#2028=DIRECTION('Axis2P3D XDirection',(-1.,0.,0.)) ;
+#2029=DIRECTION('Axis2P3D Direction',(0.,1.,0.)) ;
+#2030=DIRECTION('Axis2P3D XDirection',(-1.,0.,0.)) ;
+#2031=AXIS2_PLACEMENT_3D(' ',#2005,$,$) ;
+#2032=AXIS2_PLACEMENT_3D('Cylinder Axis2P3D',#2006,#2019,#2020) ;
+#2033=AXIS2_PLACEMENT_3D('Circle Axis2P3D',#2010,#2022,$) ;
+#2034=AXIS2_PLACEMENT_3D('Circle Axis2P3D',#2014,#2024,$) ;
+#2035=AXIS2_PLACEMENT_3D('Circle Axis2P3D',#2015,#2025,$) ;
+#2036=AXIS2_PLACEMENT_3D('Circle Axis2P3D',#2016,#2026,$) ;
+#2037=AXIS2_PLACEMENT_3D('Plane Axis2P3D',#2017,#2027,#2028) ;
+#2038=AXIS2_PLACEMENT_3D('Plane Axis2P3D',#2018,#2029,#2030) ;
+#2039=PRODUCT_DEFINITION_SHAPE(' ',' ',#2002) ;
+#2040=APPROVAL_PERSON_ORGANIZATION(#2041,#2044,#2046) ;
+#2041=PERSON_AND_ORGANIZATION(#2042,#2043) ;
+#2042=PERSON(' ',' ',' ',$,$,$) ;
+#2043=ORGANIZATION(' ',' ',' ') ;
+#2044=APPROVAL(#2045,' ') ;
+#2045=APPROVAL_STATUS('not_yet_approved') ;
+#2046=APPROVAL_ROLE('APPROVER') ;
+#2047=DATE_AND_TIME(#2074,#2048) ;
+#2048=LOCAL_TIME(10,16,5.,#2049) ;
+#2049=COORDINATED_UNIVERSAL_TIME_OFFSET(0,0,.AHEAD.) ;
+#2050=ORIENTED_EDGE('',*,*,#2096,.F.) ;
+#2051=ORIENTED_EDGE('',*,*,#2097,.T.) ;
+#2052=ORIENTED_EDGE('',*,*,#2098,.T.) ;
+#2053=ORIENTED_EDGE('',*,*,#2099,.F.) ;
+#2054=ORIENTED_EDGE('',*,*,#2098,.F.) ;
+#2055=ORIENTED_EDGE('',*,*,#2100,.T.) ;
+#2056=ORIENTED_EDGE('',*,*,#2096,.T.) ;
+#2057=ORIENTED_EDGE('',*,*,#2101,.F.) ;
+#2058=ORIENTED_EDGE('',*,*,#2100,.F.) ;
+#2059=ORIENTED_EDGE('',*,*,#2097,.F.) ;
+#2060=ORIENTED_EDGE('',*,*,#2099,.T.) ;
+#2061=ORIENTED_EDGE('',*,*,#2101,.T.) ;
+#2062=CLOSED_SHELL('Closed Shell',(#2067,#2068,#2069,#2070)) ;
+#2063=VECTOR('Line Direction',#2021,1.) ;
+#2064=VECTOR('Line Direction',#2023,1.) ;
+#2065=ADVANCED_BREP_SHAPE_REPRESENTATION('NONE',(#2073),#2130) ;
+#2066=SHAPE_REPRESENTATION(' ',(#2031),#2130) ;
+#2067=ADVANCED_FACE('Corps principal',(#2106),#2094,.T.) ;
+#2068=ADVANCED_FACE('Corps principal',(#2107),#2094,.T.) ;
+#2069=ADVANCED_FACE('Corps principal',(#2108),#2115,.F.) ;
+#2070=ADVANCED_FACE('Corps principal',(#2109),#2116,.T.) ;
+#2071=APPLICATION_PROTOCOL_DEFINITION('international standard','config_control_design',1994,#2001) ;
+#2072=APPROVAL_DATE_TIME(#2047,#2044) ;
+#2073=MANIFOLD_SOLID_BREP('Corps principal',#2062) ;
+#2074=CALENDAR_DATE(2021,1,7) ;
+#2075=CC_DESIGN_APPROVAL(#2044,(#2003,#2120,#2002)) ;
+#2076=CC_DESIGN_DATE_AND_TIME_ASSIGNMENT(#2047,#2078,(#2003)) ;
+#2077=CC_DESIGN_DATE_AND_TIME_ASSIGNMENT(#2047,#2079,(#2002)) ;
+#2078=DATE_TIME_ROLE('classification_date') ;
+#2079=DATE_TIME_ROLE('creation_date') ;
+#2080=CC_DESIGN_PERSON_AND_ORGANIZATION_ASSIGNMENT(#2041,#2084,(#2003)) ;
+#2081=CC_DESIGN_PERSON_AND_ORGANIZATION_ASSIGNMENT(#2041,#2085,(#2120)) ;
+#2082=CC_DESIGN_PERSON_AND_ORGANIZATION_ASSIGNMENT(#2041,#2086,(#2120,#2002)) ;
+#2083=CC_DESIGN_PERSON_AND_ORGANIZATION_ASSIGNMENT(#2041,#2087,(#2000)) ;
+#2084=PERSON_AND_ORGANIZATION_ROLE('classification_officer') ;
+#2085=PERSON_AND_ORGANIZATION_ROLE('design_supplier') ;
+#2086=PERSON_AND_ORGANIZATION_ROLE('creator') ;
+#2087=PERSON_AND_ORGANIZATION_ROLE('design_owner') ;
+#2088=CC_DESIGN_SECURITY_CLASSIFICATION(#2003,(#2120)) ;
+#2089=CIRCLE('generated circle',#2033,10.) ;
+#2090=CIRCLE('generated circle',#2034,10.) ;
+#2091=CIRCLE('generated circle',#2035,10.) ;
+#2092=CIRCLE('generated circle',#2036,10.) ;
+#2093=SHAPE_REPRESENTATION_RELATIONSHIP(' ',' ',#2066,#2065) ;
+#2094=CYLINDRICAL_SURFACE('generated cylinder',#2032,10.) ;
+#2095=DESIGN_CONTEXT(' ',#2001,'design') ;
+#2096=EDGE_CURVE('',#2123,#2124,#2111,.T.) ;
+#2097=EDGE_CURVE('',#2123,#2125,#2089,.T.) ;
+#2098=EDGE_CURVE('',#2125,#2126,#2112,.T.) ;
+#2099=EDGE_CURVE('',#2124,#2126,#2090,.T.) ;
+#2100=EDGE_CURVE('',#2125,#2123,#2091,.T.) ;
+#2101=EDGE_CURVE('',#2126,#2124,#2092,.T.) ;
+#2102=EDGE_LOOP('',(#2050,#2051,#2052,#2053)) ;
+#2103=EDGE_LOOP('',(#2054,#2055,#2056,#2057)) ;
+#2104=EDGE_LOOP('',(#2058,#2059)) ;
+#2105=EDGE_LOOP('',(#2060,#2061)) ;
+#2106=FACE_OUTER_BOUND('',#2102,.T.) ;
+#2107=FACE_OUTER_BOUND('',#2103,.T.) ;
+#2108=FACE_OUTER_BOUND('',#2104,.T.) ;
+#2109=FACE_OUTER_BOUND('',#2105,.T.) ;
+#2110=UNCERTAINTY_MEASURE_WITH_UNIT(LENGTH_MEASURE(0.005),#2127,'distance_accuracy_value','CONFUSED CURVE UNCERTAINTY') ;
+#2111=LINE('Line',#2007,#2063) ;
+#2112=LINE('Line',#2012,#2064) ;
+#2113=MECHANICAL_CONTEXT(' ',#2001,'mechanical') ;
+#2114=PERSONAL_ADDRESS(' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',(#2042),' ') ;
+#2115=PLANE('',#2037) ;
+#2116=PLANE('',#2038) ;
+#2117=PLANE_ANGLE_MEASURE_WITH_UNIT(PLANE_ANGLE_MEASURE(0.0174532925199),#2128) ;
+#2118=PRODUCT_CATEGORY('part',$) ;
+#2119=PRODUCT_CATEGORY_RELATIONSHIP(' ',' ',#2118,#2121) ;
+#2120=PRODUCT_DEFINITION_FORMATION_WITH_SPECIFIED_SOURCE('',' ',#2000,.NOT_KNOWN.) ;
+#2121=PRODUCT_RELATED_PRODUCT_CATEGORY('detail',$,(#2000)) ;
+#2122=SHAPE_DEFINITION_REPRESENTATION(#2039,#2066) ;
+#2123=VERTEX_POINT('',#2008) ;
+#2124=VERTEX_POINT('',#2009) ;
+#2125=VERTEX_POINT('',#2011) ;
+#2126=VERTEX_POINT('',#2013) ;
+#2127=(LENGTH_UNIT()NAMED_UNIT(*)SI_UNIT(.MILLI.,.METRE.)) ;
+#2128=(NAMED_UNIT(*)PLANE_ANGLE_UNIT()SI_UNIT($,.RADIAN.)) ;
+#2129=(NAMED_UNIT(*)SI_UNIT($,.STERADIAN.)SOLID_ANGLE_UNIT()) ;
+#2130=(GEOMETRIC_REPRESENTATION_CONTEXT(3)GLOBAL_UNCERTAINTY_ASSIGNED_CONTEXT((#2110))GLOBAL_UNIT_ASSIGNED_CONTEXT((#2127,#2128,#2129))REPRESENTATION_CONTEXT(' ',' ')) ;
+
+
+ENDSEC;
+
+END-ISO-10303-21;
+
+

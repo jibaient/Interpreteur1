@@ -1,0 +1,4 @@
+#ifndef MAP_OBJECT_EXT_HPP
+#define MAP_OBJECT_EXT_HPP
+
+#endif // MAP_OBJECT_EXT_HPP
